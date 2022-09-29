@@ -98,6 +98,17 @@ app.get('/dashboard', (req, res, next) => {
   }
 });
 
+app.use((req, res, next) => {
+  const error = new Error('endpoint not found');
+  error.status = 404;
+  next(error);
+});
+
+app.use((err, req, res, next) => {
+  const status = err.status || 500;
+  res.status(status).json({ message: err.message })
+});
+
 app.listen(PORT, () => {
   console.log(`Server is now listening on port ${PORT}`)
 });

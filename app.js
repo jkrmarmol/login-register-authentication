@@ -4,11 +4,14 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { findUsername, showInfos, database } = require('./database');
 const { resultBcrypt, translateToBcrypt } = require('./bcrypt-auth');
+const cors = require('cors');
 const store = session.MemoryStore();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
+app.use(cors({
+  origin: '*'
+}))
 app.use(
   session({
     secret: "secret-key",
